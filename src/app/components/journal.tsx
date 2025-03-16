@@ -18,7 +18,7 @@ export const Journal = () => {
   });
 
   return (
-    <div>
+    <div >
       <div className='text-2xl text-black font-bold px-4 mb-2'>
         Journal Entry
       </div>

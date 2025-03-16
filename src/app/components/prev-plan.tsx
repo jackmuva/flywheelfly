@@ -9,7 +9,7 @@ export const PrevPlan = () => {
   const editor = useEditor({
     extensions: [StarterKit, TaskList, TaskItem],
     content: `<ul data-type="taskList">
-          <li data-type="taskItem" data-checked="true">Item</li>
+          <li data-type="taskItem" data-checked="true">Today...</li>
         </ul>`,
     editorProps: {
       attributes: {
@@ -21,7 +21,7 @@ export const PrevPlan = () => {
   return (
     <div>
       <div className='text-2xl text-black font-bold px-4 mb-2'>
-        Today's Planned Tasks
+        Today's Plan
       </div>
       <div className='rounded-md bg-stone-200 h-44 w-full text-black p-4 overflow-y-scroll text-lg'>
         <EditorContent editor={editor} />
