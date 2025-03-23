@@ -1,20 +1,20 @@
-import Dexie, { Entity, type EntityTable } from 'dexie';
+import Dexie, { type EntityTable } from 'dexie';
 
-interface Task {
-	id: string,
+export interface Task {
+	id: number,
 	date: string,
 	task: string
 }
 
-interface Activity {
-	id: string,
+export interface Activity {
+	id: number,
 	date: string,
 	activity: string,
 	log: string
 }
 
-interface Vision {
-	id: string,
+export interface Vision {
+	id: number,
 	vision: string,
 	parentId: string,
 	childrenId: Array<string>
@@ -31,3 +31,17 @@ const ActivityDb = new Dexie('ActivityDatabase') as Dexie & {
 const VisionDb = new Dexie('VisionDatabase') as Dexie & {
 	visions: EntityTable<Vision, 'id'>;
 };
+
+TaskDb.version(1).stores({
+	tasks: '++id, date, task',
+});
+ActivityDb.version(1).stores({
+	activities: '++id, date, activity, log',
+});
+VisionDb.version(1).stores({
+	visions: '++id, vision, parentId, childrenId'
+});
+
+export { TaskDb };
+export { ActivityDb };
+export { VisionDb };
