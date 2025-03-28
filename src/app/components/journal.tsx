@@ -14,7 +14,8 @@ export const Journal = () => {
       attributes: {
         class: 'focus:outline-none',
       },
-    }
+    },
+    immediatelyRender: false
   });
 
   return (

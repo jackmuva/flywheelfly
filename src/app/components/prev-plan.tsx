@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { TaskDb } from '../db/db';
 import { useLiveQuery } from 'dexie-react-hooks';
 
-export const PrevPlan = () => {
+export const PrevPlan = (props: { date: string }) => {
   const editor = useEditor({
     extensions: [StarterKit, TaskList, TaskItem],
     content: `<ul data-type="taskList">
@@ -18,29 +18,29 @@ export const PrevPlan = () => {
       attributes: {
         class: 'focus:outline-none',
       },
-    }
+    },
+    immediatelyRender: false
   });
-  const [date, setDate] = useState<string>(new Date().toISOString());
   const [tasks, setTasks] = useState<string>("");
+
+  const todaysTasks = useLiveQuery(
+    async () => {
+      const todaysTasks = await TaskDb.tasks
+        .where('age')
+        .equals(props.date)
+        .toArray();
+
+      return todaysTasks;
+    },
+    [props.date]
+  );
 
 
   useEffect(() => {
-    const todaysTasks = useLiveQuery(
-      async () => {
-        const todaysTasks = await TaskDb.tasks
-          .where('age')
-          .equals(date)
-          .toArray();
-
-        return todaysTasks;
-      },
-      [date]
-    );
-
     if (todaysTasks !== undefined && todaysTasks.length > 0) {
       setTasks(todaysTasks[0].task);
     }
-  }, [date]);
+  }, [props.date]);
 
   return (
     <div>
